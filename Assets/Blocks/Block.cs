@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+[RequireComponent(typeof(CompName))]
 partial class Block//size
 {
-    public virtual void Awake()
-    {
-        rt = GetComponent<RectTransform>();
-    }
-    RectTransform rt;
+
+    RectTransform _rt;
+    public RectTransform rt { get { if (_rt == null) _rt = GetComponent<RectTransform>(); return _rt; } }
+
     public virtual bool isNewLineStart => false;
-    public virtual float tailWidth => 10f;
-    public virtual float width => rt.sizeDelta.x+tailWidth;
-    public virtual float height => rt.sizeDelta.y;
+    public virtual float tailWidth => 0;
+    public virtual float widthWihtTail => width + tailWidth;
+    public virtual float width
+    {
+        get {return rt.rect.width; }
+        set { rt.sizeDelta = new Vector2(value, height); }
+    }
+    public virtual float height
+    {
+        get { return rt.rect.height; }
+        set { rt.sizeDelta = new Vector2(width, value); }
+    }
 
 }
 partial class Block : IPointerClickHandler
@@ -58,15 +67,20 @@ public partial class Block : MonoBehaviour
     public virtual void SetRecord(Record r) { }
 
 
-    public virtual Vector3 InputFocusePoint => transform.position +Vector3.right*width;
+    public virtual Vector3 InputFocusePoint => transform.position +Vector3.right*widthWihtTail;
     [SerializeField]
-    private string resName;
-    public virtual string ResName => resName;
-    public Block up;
-    public virtual void AfterEnter() { }
+    public string _resName;
+    public virtual string ResName => _resName;
+    public void SetUp(Block b) => up = b;
+    public Block up { get; private set; }
+    public virtual void AfterEnter()
+    {
+        this.LinkWithGo(gameObject);
+        gameObject.SetActive(true);
+    }
 
     public virtual void EnsureChildAfter() { }
-    public virtual void FreshSize() { }
+    public virtual void FreshSize(bool getComp,float minTimes) { }
 
     //child
 

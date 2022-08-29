@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class MainLoop : MonoBehaviour
 {
-    public Transform BlockPreList;
     public Block RootBlock;
     void Start()
     {
-        for (int i = 0; i < BlockPreList.childCount; i++)
-        {
-            var c = BlockPreList.GetChild(i);
-            var b = c.GetComponent<Block>();
-            Creater.AddBlcok(b);
-        }
+
         manager.Init();
         Update();
         InputManager.Focus(RootBlock.GetChildBlock(0));
@@ -27,7 +21,7 @@ public class MainLoop : MonoBehaviour
     {
         manager.FreshInput();
         RootBlock.EnsureChildAfter();
-        RootBlock.FreshSize();
+        RootBlock.FreshSize(false,1);
         manager.FreshFocusPoss();
     }
 }

@@ -4,6 +4,19 @@ using UnityEngine;
 
 public partial class BlockRoot : Block
 {
+    public override void EnsureChildAfter()
+    {
+        base.EnsureChildAfter();
+
+        EnsureChild(0, BlockNewLine.BlockResName);
+        for (int i = 0; i < ChildRoot.childCount; i++)
+        {
+            var to = ChildRoot.GetChild(i).GetBlock();
+            if (to) to.EnsureChildAfter();
+        }
+    }
+
+
     public Transform ChildRoot_;
     public override Transform ChildRoot => ChildRoot_;
     public override Block EnsureChild(int index, string toName)
@@ -17,7 +30,8 @@ public partial class BlockRoot : Block
         if (pre == null) return null;
 
         var ne = Instantiate(pre, ChildRoot);
-        ne.up = this;
+        ne.AfterEnter();
+        ne.SetUp(this);
         ne.transform.SetSiblingIndex(index);
         ne.transform.localPosition = Vector3.zero;
         return ne;
@@ -35,57 +49,18 @@ public partial class BlockRoot : Block
         base.MoveDirection(index, key);
         if (key == KeyCode.RightArrow) InputManager.Focus(GetChildBlock(index + 1));
        else if (key == KeyCode.LeftArrow) InputManager.Focus(GetChildBlock(index - 1));
+
+        else if (key == KeyCode.DownArrow) InputManager.Focus(GetChildBlock(index + 1));
+        else if (key == KeyCode.UpArrow) InputManager.Focus(GetChildBlock(index - 1));
+
     }
 }
 partial class BlockRoot
 {
-
-    public float LineSplit = 5;
-    public float MaxWidth = Screen.width;
-
-    public override void FreshSize()
+    public UIFreshSize fresh;
+    public override void FreshSize(bool getComp, float minTimes)
     {
-        base.FreshSize();
-        int NowBlockIndex=0;
-
-        float NowX = 0;
-        float NowY = 0;
-        float NowLineMaxHeight = 0;
-        int NowlineIndex = 0;
-        void ToNewLine()
-        {
-            NowBlockIndex = 0;
-            NowX = 0;
-            NowY += NowLineMaxHeight+LineSplit;
-            NowLineMaxHeight = 0;
-            NowlineIndex ++;
-        }
-        bool TestIfOverWeight(Block b)
-        {
-            return b.width + NowX > MaxWidth;
-        }
-        for (int i = 0; i < ChildRoot.childCount; i++)
-        {
-            var b = ChildRoot.GetChild(i).GetComponent<Block>();
-            if (!b) continue;
-            //print(b.isNewLineStart);
-            //print(NowlineIndex);
-            //print(NowBlockIndex);
-            if (b.isNewLineStart &&  (NowBlockIndex != 0))
-            {
-                ToNewLine();
-                //print("new line start");
-            }
-            if (NowBlockIndex != 0 && TestIfOverWeight(b)) ToNewLine();
-            //print(new Vector3(NowX, NowY));
-            b.transform.localPosition = new Vector3(NowX, - NowY);
-            if (b.height > NowLineMaxHeight) NowLineMaxHeight = b.height;
-            //print(b.height);
-            NowX += b.width;
-            NowBlockIndex++;
-
-        }
-
+        fresh.FreshSize(getComp,minTimes);
     }
    
 }
