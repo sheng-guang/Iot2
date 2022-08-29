@@ -19,17 +19,17 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
     public void OnDeselect(BaseEventData eventData)    {        print("deselect InputField");    }
     void ISelectHandler.OnSelect(BaseEventData eventData)    {        print("slect InputField ");    }
     public static void OnBlockDeslect(Block b)    {    }
-    public static void Focus(Block b)
+    public static void Focus(InputEnter b)
     {
         if (b == null) return;
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(InputField.gameObject);
-
-        //print("focuse on" + b);
+        InputField.text = "";
+        print("focuse on    " + b);
         OnFocuse = b;
     }
-     static Block OnFocuse;
+     static InputEnter OnFocuse;
     string LastString = "";
     public bool LasIsNull => string.IsNullOrEmpty(LastString);
     public void FreshInput()
@@ -65,10 +65,16 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
     }
     public void FreshFocusPoss()
     {
-        if (OnFocuse)
+        if (OnFocuse!=null)
         {
             transform.position = OnFocuse.InputFocusePoint;
         }
     }
 
+}
+public interface InputEnter
+{
+Vector3 InputFocusePoint { get; }
+    public void enter(string s); 
+    public void enter(KeyCode s); 
 }

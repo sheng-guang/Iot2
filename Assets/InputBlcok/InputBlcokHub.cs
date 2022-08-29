@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputBlcokHub : MonoBehaviour
 {
     UIFreshSize fresh;
+    public Transform HideTr;
     public void init()
     {
         fresh = GetComponent<UIFreshSize>();
@@ -15,6 +16,13 @@ public class InputBlcokHub : MonoBehaviour
             Creater.AddBlcok(b);
             list.Add(b);
         }
+        for (int i = 0; i < HideTr.childCount; i++)
+        {
+            var b = HideTr.GetChild(i).GetComponent<Block>();
+            if (b == false) continue;
+            Creater.AddBlcok(b);
+        }
+        HideTr.gameObject.SetActive(false);
     }
 
     public List<Block> list = new List<Block>();

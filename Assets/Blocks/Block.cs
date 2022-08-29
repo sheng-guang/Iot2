@@ -29,11 +29,12 @@ partial class Block : IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
+        eventData.Use();
         InputManager.Focus(this);
     }
 }
 
-partial class Block//enter
+partial class Block:InputEnter //enter
 {
     public virtual Transform ChildRoot => null;
     public int Index => transform.GetSiblingIndex();
@@ -51,7 +52,10 @@ partial class Block//enter
         var ne = up.CreatChild(Index + 1, FullName);
         if (ne) InputManager.Focus(ne);
     }
-    public void Delet() => up.DeletChild(this);
+    public void Delet()
+    {
+        up.DeletChild(this);
+    }
 
 }
 partial class Block
