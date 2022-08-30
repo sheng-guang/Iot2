@@ -84,7 +84,7 @@ public partial class Block : MonoBehaviour
     [SerializeField]
     public string DefResName;
     public virtual string ResName => DefResName;
-    public void SetUp(BlockUp b) => up = b;
+    public virtual void SetUp(BlockUp b) => up = b;
     public BlockUp up { get; private set; }
     public virtual void AfterEnter()
     {
