@@ -19,9 +19,9 @@ public class UIFreshSize : MonoBehaviour
     public float LineSplit = 5;
     public float MaxWidth =>ChildRoot.rect.width;
 
-    public void FreshSize(bool getComp,float minTimes)
+    public void FreshSize(bool getComp,bool pre)
     {
-        if (rt.width() < minWidth*minTimes) rt.setWidth(minWidth*minTimes);
+        if (rt.width() <(pre?PreMinWidth: minWidth)) rt.setWidth(pre ? PreMinWidth : minWidth);
         int NowBlockIndex = 0;
 
         float NowX = 0;
@@ -48,7 +48,7 @@ public class UIFreshSize : MonoBehaviour
             else b = ChildRoot.GetChild(i).GetBlock();
             if (!b) continue;
             if (b.gameObject.activeInHierarchy == false) continue;
-            b.FreshSize(getComp,minTimes);
+            b.FreshSize(getComp,pre);
             //print(b.isNewLineStart);
             //print(NowlineIndex);
             //print(NowBlockIndex);
@@ -66,9 +66,12 @@ public class UIFreshSize : MonoBehaviour
             NowBlockIndex++;
         }
         rt.setHeight( NowY + NowLineMaxHeight);
-        if (rt.height() < minHeight * minTimes) rt.setHeight( minHeight * minTimes);
+        if (rt.height() < (pre ? PreMinHeight : minHeight))
+            rt.setHeight(pre ? PreMinHeight : minHeight);  
     }
     public float minWidth = 200;
     public float minHeight = 150;
-
+    public float PreMinWidth = 200;
+    public float PreMinHeight = 105;
+    
 }

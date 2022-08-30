@@ -11,8 +11,8 @@ public class CompName : MonoBehaviour
     {
        var b= GetComponent<Block>();
         if (b == null) return;
-        b._resName = ResName;
-        name = ResName;
-      if(ResNameText)  ResNameText.text = ResName;
+        b.DefResName = ResName;
+        name = b.GetGoName();
+      if(ResNameText)  ResNameText.text = b.GetTextName();
     }
 }

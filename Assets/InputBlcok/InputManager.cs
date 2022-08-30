@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
 
         EventSystem.current.SetSelectedGameObject(InputField.gameObject);
         InputField.text = "";
-        print("focuse on    " + b);
+        print("focus  " + b.ToString().Replace("(Clone)",""));
         OnFocuse = b;
     }
      static InputEnter OnFocuse;

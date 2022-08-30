@@ -54,7 +54,7 @@ public class InputBlcokHub : MonoBehaviour
             }   
         }
 
-        fresh.FreshSize(true,0.5f);
+        fresh.FreshSize(true,true);
     }
     
 }

@@ -21,7 +21,7 @@ public class MainLoop : MonoBehaviour
     {
         manager.FreshInput();
         RootBlock.EnsureChildAfter();
-        RootBlock.FreshSize(false,1);
+        RootBlock.FreshSize(false,false);
         manager.FreshFocusPoss();
     }
 }

@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+partial class Block
+{
+    public virtual int ParamCount => 0;
+    public virtual string returnType =>"";
+    public bool OnlyShowType => false;
+    public virtual string GetGoName() { return ResName; }
+    public virtual string GetTextName()
+    {
+        if (OnlyShowType) { return returnType; }
+        var re = ResName;
+        if (string.IsNullOrWhiteSpace( returnType)==false) re += " (" + returnType + ")";
+        return re;
+    }
+
+}
 [RequireComponent(typeof(CompName))]
 partial class Block//size
 {
@@ -49,7 +64,7 @@ partial class Block:InputEnter //enter
     }
     public virtual void enter(string FullName)
     {
-        var ne = up.CreatChild(Index + 1, FullName);
+        var ne = up.EntarChild(Index + 1, FullName);
         if (ne) InputManager.Focus(ne);
     }
     public void Delet()
@@ -58,25 +73,19 @@ partial class Block:InputEnter //enter
     }
 
 }
-partial class Block
-{
-    public virtual Block EnsureChild(int index, string toName) => null;
-    public virtual Block CreatChild(int index, string toName) => null;
-    public virtual void DeletChild(Block b) { }
-    public virtual void MoveDirection(int index,KeyCode key) { }
-}
+
 public partial class Block : MonoBehaviour
 {
     public virtual Record GetRecord() { return null; }
     public virtual void SetRecord(Record r) { }
 
 
-    public virtual Vector3 InputFocusePoint => transform.position +Vector3.right*widthWihtTail;
+    public virtual Vector3 InputFocusePoint => transform.position +Vector3.right*widthWihtTail*transform.lossyScale.x;
     [SerializeField]
-    public string _resName;
-    public virtual string ResName => _resName;
-    public void SetUp(Block b) => up = b;
-    public Block up { get; private set; }
+    public string DefResName;
+    public virtual string ResName => DefResName;
+    public void SetUp(BlockUp b) => up = b;
+    public BlockUp up { get; private set; }
     public virtual void AfterEnter()
     {
         this.LinkWithGo(gameObject);
@@ -84,7 +93,7 @@ public partial class Block : MonoBehaviour
     }
 
     public virtual void EnsureChildAfter() { }
-    public virtual void FreshSize(bool getComp,float minTimes) { }
+    public virtual void FreshSize(bool getComp,bool minTimes) { }
 
     //child
 

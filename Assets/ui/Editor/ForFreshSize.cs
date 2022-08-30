@@ -17,7 +17,7 @@ public class ForUIContent : Editor<UIFreshSize>
 {
     public override void OnInspectorGUI()
     {
-        if (GUILayout.Button("fresh")) tar.FreshSize(true,0.5f);
+        if (GUILayout.Button("fresh")) tar.FreshSize(true,true);
 
         base.OnInspectorGUI();
     }
