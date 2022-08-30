@@ -46,7 +46,11 @@ public class UIFreshSize : MonoBehaviour
             Block b = null;
             if (getComp) b = ChildRoot.GetChild(i).GetComponent<Block>();
             else b = ChildRoot.GetChild(i).GetBlock();
-            if (!b) continue;
+            if (!b)
+            {
+                if (ChildRoot.GetChild(i).GetComponent<UIFreshSizeNewLine>()) ToNewLine();
+                continue;
+            }
             if (b.gameObject.activeInHierarchy == false) continue;
             b.FreshSize(getComp,pre);
             //print(b.isNewLineStart);

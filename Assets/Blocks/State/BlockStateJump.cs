@@ -49,4 +49,8 @@ public class BlockStateJump : Block
 
         point.setPoint(startPoint.position, tar.getCloset(startPoint.position));
     }
+    private void OnDestroy()
+    {
+if(point)        Destroy(point.gameObject);
+    }
 }

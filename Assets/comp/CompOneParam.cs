@@ -14,11 +14,11 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
     }
     public TextMeshProUGUI TypeText;
     public Vector3 InputFocusePoint => transform.position+Vector3.right* 100*transform.lossyScale.x;
-    public void SetType(OneParm p)
+    public void SetType(OneParam p)
     {
-        ParamName = p.name;
+        ParamName = p.Name;
         Type = p.Type;
-       if(TypeText) TypeText.text = p.name + "\n(" + p.Type+")";
+       if(TypeText) TypeText.text = p.Name + "\n(" + p.Type+")";
     }
     public string ParamName;
     public string Type;

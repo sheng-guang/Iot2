@@ -31,12 +31,12 @@ public class InputBlcokHub : MonoBehaviour
     public void SetKey(string key)
     {
         showing.Clear();
-        if (string.IsNullOrEmpty(key))
+        if (string.IsNullOrWhiteSpace(key))
         {
             gameObject.SetActive(false);return;
         }
         gameObject.SetActive(true);
-        if (string.IsNullOrWhiteSpace(key))
+        if (key=="+")
         {
             for (int i = 0; i < list.Count; i++)
             {

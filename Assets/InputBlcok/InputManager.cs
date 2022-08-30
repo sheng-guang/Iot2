@@ -6,8 +6,9 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
 {
     public static TMP_InputField InputField;
-    public TMP_InputField f;
     public InputBlcokHub blockList;
+    [Header("to write")]
+    public TMP_InputField f;
 
     public void Init()
     {
@@ -26,7 +27,7 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
 
         EventSystem.current.SetSelectedGameObject(InputField.gameObject);
         InputField.text = "";
-        print("focus  " + b.ToString().Replace("(Clone)",""));
+        //print("focus  " + b.ToString().Replace("(Clone)",""));
         OnFocuse = b;
     }
      static InputEnter OnFocuse;
@@ -54,6 +55,9 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
         if (LasIsNull)
         {
             IfKeyDownSend(KeyCode.Backspace);
+
+            IfKeyDownSend(KeyCode.Space);
+
             IfKeyDownSend(KeyCode.LeftArrow);
             IfKeyDownSend(KeyCode.UpArrow);
             IfKeyDownSend(KeyCode.DownArrow);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockParam : Block
+public class UIFreshSizeNewLine : MonoBehaviour
 {
-    public override bool OnlyShowType => true;
+
 }

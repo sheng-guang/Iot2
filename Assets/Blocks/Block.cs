@@ -6,9 +6,14 @@ using UnityEngine.EventSystems;
 partial class Block
 {
     public virtual int ParamCount => 0;
-    public virtual string returnType =>"";
-    public bool OnlyShowType => false;
-    public virtual string GetGoName() { return ResName; }
+    public  string returnType=>ReturnTypeDefault;
+    public string ReturnTypeDefault;
+    public virtual bool OnlyShowType => false;
+    public virtual string GetGoName()
+    {
+        if (OnlyShowType) { return returnType; }
+        return ResName;
+    }
     public virtual string GetTextName()
     {
         if (OnlyShowType) { return returnType; }
@@ -57,6 +62,7 @@ partial class Block:InputEnter //enter
     public virtual void enter(KeyCode key)
     {
         if (key == KeyCode.Return) enter(BlockNewLine.BlockResName);
+        if (key == KeyCode.Space) enter(BlockSpace.StaticResName);
         if (key == KeyCode.Backspace) Delet();
         if (key == KeyCode.RightArrow || key == KeyCode.LeftArrow
             || key == KeyCode.UpArrow || key == KeyCode.DownArrow)

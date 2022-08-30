@@ -9,9 +9,9 @@ public interface BlockUp
 }
 public class BlockFunction : Block
 {
-    public CompParams func;
-    public override int ParamCount => func.p.Count;
-    public string _returnType;
-    public override string returnType => _returnType;
+    public CompParams compIO;
+    public override int ParamCount => compIO.type.Count;
+    //public string ReturnTypeDefault;
+    //public override string returnType => ReturnTypeDefault;
 
 }

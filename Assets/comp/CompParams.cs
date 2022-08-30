@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 [Serializable]
-public class OneParm
+public class OneParam
 {
-    public string name;
+    public string Name;
     public string Type;
 }
 
@@ -22,16 +22,16 @@ public class CompParams : MonoBehaviour
     private void OnValidate()
     {
         if (Application.isPlaying) return;
-        SetParams();
+        FreshParams();
     }
-    public List<OneParm> p;
+    public List<OneParam> type;
     public List<CompOneParam> created;
     IEnumerator destory(GameObject g)
     {
         yield return 1;
         DestroyImmediate(g);
     }
-    public void SetParams()
+    public void FreshParams()
     {
 
         foreach (var item in created)
@@ -39,9 +39,9 @@ public class CompParams : MonoBehaviour
             if (item) { StartCoroutine(destory(item.gameObject)); }
         }
         created.Clear();
-        for (int i = 0; i < p.Count; i++)
+        for (int i = 0; i < type.Count; i++)
         {
-            var to = p[i];
+            var to = type[i];
             var ne = Instantiate(pre, pre.transform.parent);
             created.Add(ne);
             ne.gameObject.SetActive(true);
