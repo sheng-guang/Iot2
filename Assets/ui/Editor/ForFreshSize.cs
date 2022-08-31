@@ -48,7 +48,10 @@ public class ForCompName : Editor<CompName>
             tar.GetComponentInParent<UIFreshSize>().FreshSize(true,true);
             Selection.objects = new Object[] { ne.gameObject };
         }
-
+        if(GUILayout.Button("fresh layout"))
+        {
+            tar.transform.parent.GetComponentInParent<UIFreshSize>().FreshSize(true, true);
+        }
         base.OnInspectorGUI();
     }
 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static UnityEditor.Progress;
+
 [Serializable]
 public class OneParam
 {
@@ -33,10 +35,11 @@ public class CompParams : MonoBehaviour
     }
     public void FreshParams()
     {
-
-        foreach (var item in created)
+        for (int i = 0; i < pre.transform.parent.childCount; i++)
         {
-            if (item) { StartCoroutine(destory(item.gameObject)); }
+            var to = pre.transform.parent.GetChild(i);
+            if (to == pre.transform) continue;
+            StartCoroutine(destory(to.gameObject));
         }
         created.Clear();
         for (int i = 0; i < type.Count; i++)
@@ -47,14 +50,19 @@ public class CompParams : MonoBehaviour
             ne.gameObject.SetActive(true);
             ne.SetType(to);
             ne.transform.localPosition = getLoCalPositon(i);
+            ne.transform.localScale = getScale(i);
         }
     }
-
-    public Vector3 getLoCalPositon(int index)
+    public virtual Vector3 getScale(int index)
+    {
+        return Vector3.one;
+    }
+    public virtual Vector3 getLoCalPositon(int index)
     {
         if (index == 0) return Vector3.zero;
         var line = (index + 1) / 2;
         var lineIndex = (index + 1) % 2;
         return new Vector3(lineIndex * 100, -line * 50);
     }
+    
 }

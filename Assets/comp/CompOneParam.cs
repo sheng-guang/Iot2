@@ -7,10 +7,12 @@ using UnityEngine.EventSystems;
 using TMPro;
 public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,BlockUp
 {
+    RectTransform rt;
     public Block up;
     private void Awake()
     {
         up = GetComponentInParent<Block>();
+        rt = GetComponent<RectTransform>();
     }
     public TextMeshProUGUI TypeText;
     public Vector3 InputFocusePoint => transform.position+Vector3.right* 100*transform.lossyScale.x;
@@ -33,7 +35,7 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
         ne.SetUp(this);
         //ne.transform.SetSiblingIndex(index);
         ne.transform.localPosition = Vector3.zero;
-        ne.transform.localScale = Vector3.one * 0.5f;
+        ne.transform.localScale = Vector3.one * rt.width()/ne.width;
         created = ne;
         InputManager.Focus(created);
     }

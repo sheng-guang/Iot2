@@ -57,6 +57,7 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
             IfKeyDownSend(KeyCode.Backspace);
 
             IfKeyDownSend(KeyCode.Space);
+            IfKeyDownSend(KeyCode.Tab);
 
             IfKeyDownSend(KeyCode.LeftArrow);
             IfKeyDownSend(KeyCode.UpArrow);

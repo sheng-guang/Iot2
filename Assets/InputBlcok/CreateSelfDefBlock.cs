@@ -41,17 +41,21 @@ public class CreateSelfDefBlock : MonoBehaviour
     [Header("to write")]
 
     public BlockFunction pre;
+    public BlockFunction Pre250width;
     public Transform RootTr;
     public void createOneBlock(string line)
     {
         var ll = line.Split(",");
-        var ne = Instantiate(pre, RootTr);
+        bool iswidth = string.IsNullOrWhiteSpace(ll[4]) == false;
+        var ne = Instantiate(iswidth? Pre250width:pre, RootTr);
+        ne.compIO.pre.gameObject.SetActive(false);
         Created.Add(ne);
         var neName = ne.GetComponent<CompName>();
         neName.SetNameFresh(ll[0], ll[1]);
 
 
-        var ll2 = ll[2].Split('|');
+        var ll2 = ll[2].Split('[', System.StringSplitOptions.RemoveEmptyEntries);
+        //print(ll2.Length);
         ne.compIO.type.Clear();
         foreach (var item in ll2)
         {
@@ -60,7 +64,7 @@ public class CreateSelfDefBlock : MonoBehaviour
             neParam.Type = item;
         }
 
-        var ll3 = ll[3].Split('|');
+        var ll3 = ll[3].Split('[', System.StringSplitOptions.RemoveEmptyEntries);
         for (int i = 0; i < ll3.Length && i < ne.compIO.type.Count; i++)
         {
             ne.compIO.type[i].Name = ll3[i];

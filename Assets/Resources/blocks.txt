@@ -1,3 +1,0 @@
-//0name,1returnType,2inputType,3inputNames
-digitalRead,int,int|DEFINE,
-ButtonState,bool,int|int,

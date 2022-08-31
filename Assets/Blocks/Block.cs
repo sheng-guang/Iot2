@@ -63,6 +63,7 @@ partial class Block:InputEnter //enter
     {
         if (key == KeyCode.Return) enter(BlockNewLine.BlockResName);
         if (key == KeyCode.Space) enter(BlockSpace.StaticResName);
+        if (key == KeyCode.Tab) enter(BlockTab.StaticResName);
         if (key == KeyCode.Backspace) Delet();
         if (key == KeyCode.RightArrow || key == KeyCode.LeftArrow
             || key == KeyCode.UpArrow || key == KeyCode.DownArrow)
