@@ -47,7 +47,7 @@ public class BlockStateJump : Block
         //Vector3 center = startPoint.position;
         //center.x = master.block.width + master.block.transform.position.x +100 ;
 
-        point.setPoint(startPoint.position, tar.getCloset(startPoint.position));
+        point.setPoint(startPoint.position, tar.getCloset(point.Center.position));
     }
     private void OnDestroy()
     {

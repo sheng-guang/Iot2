@@ -30,9 +30,10 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
         //print("focus  " + b.ToString().Replace("(Clone)",""));
         OnFocuse = b;
     }
+    public bool IsInputFocuse => EventSystem.current.currentSelectedGameObject == InputField.gameObject;
      static InputEnter OnFocuse;
     string LastString = "";
-    public bool LasIsNull => string.IsNullOrEmpty(LastString);
+    public bool SingleKey => string.IsNullOrEmpty(LastString)&&IsInputFocuse;
     public void FreshInput()
     {
         
@@ -40,7 +41,7 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
         blockList.SetKey(NowStr);
         if ( Input.GetKeyDown(KeyCode.Return))
         {
-            if (LasIsNull) { OnFocuse.enter(KeyCode.Return); }
+            if (SingleKey) { OnFocuse.enter(KeyCode.Return); }
             else
             {
                 if(blockList.hasShowing)
@@ -52,7 +53,7 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
         {
             if (Input.GetKeyDown(k)) OnFocuse.enter(k);
         }
-        if (LasIsNull)
+        if (SingleKey)
         {
             IfKeyDownSend(KeyCode.Backspace);
 
