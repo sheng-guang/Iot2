@@ -1,16 +1,17 @@
-//0name,1returnType,2inputType,3inputNames,4iswide,
+//0name,1returnType,2inputType,3inputNames,4FirstFullSize,5 icon
 digitalRead,int,int[DEFINE,,,
-Button State,bool,int[int,,,
+Button State,bool,int[int,,,Button
 delay,,int,,,
-inti WIFI,,DEFINE[DEFINE[DEFINE,Mod[ssi[password,,
-WIFI connected,bool,,,,
-init DHT,,int[int,PIN[type,,
-DHT read Humidity,float,,,,
-DHT read Temperature,float,,,,
-send data,,float[float,Humidity[Temperature,,
+WIFI init,,DEFINE[DEFINE[DEFINE,Mod[ssi[password,,WIFI
+WIFI connected,bool,,,,WIFI
+DHT init,,int[int,PIN[type,,DHT
+DHT read Humidity,float,,,,DHT
+DHT read Temperature,float,,,,DHT
+send data,,float[float,Humidity[Temperature,,WIFI
 init float,,string[float,name[value,,
 set float,,float[string,value[name,1,
 init int,,string[int,name[value,,
 set int,,int[string,value[name,1,
 init bool,,string[bool,name[value,,
 set bool,,bool[string,value[name,1,
+test float,float,float[float[float[float[float[float[,v[v[v[v,,

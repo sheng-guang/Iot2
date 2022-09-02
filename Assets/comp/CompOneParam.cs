@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 using TMPro;
 public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,BlockUp
 {
+
+
     RectTransform rt;
     public Block up;
     private void Awake()
@@ -24,19 +26,19 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
     }
     public string ParamName;
     public string Type;
-
+    public Transform CreatedPar => transform.GetChild(0);
     public void enter(string toName)
     {
         var pre = Creater.getPre(toName);
         if (pre == null) return ;
         if (pre.returnType != Type) return;
-        var ne = Instantiate(pre, transform);
+        var ne = Instantiate(pre, CreatedPar);
+        created = ne;
         ne.AfterEnter();
         ne.SetUp(this);
         //ne.transform.SetSiblingIndex(index);
         ne.transform.localPosition = Vector3.zero;
-        ne.transform.localScale = Vector3.one * rt.width()/ne.width;
-        created = ne;
+        ne.transform.localScale = Vector3.one;
         InputManager.Focus(created);
     }
 
@@ -44,7 +46,7 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
     {
         if(s== KeyCode.Backspace) {if(created) DestroyImmediate(created); }
     }
-    
+   
     public Block created = null;
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -63,8 +65,21 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
 
     public void DeletChild(Block b)
     {
-        print("here");
+        //print("here");
         if (created) Destroy(created.gameObject);
         InputManager.Focus(this);
     }
+
+    public void freshSize(bool getComp, bool minTimes)
+    {
+        if (created)
+        {
+            created.FreshSize(getComp, minTimes);
+            created.transform.localPosition = Vector3.zero;
+            created.transform.localScale = Vector3.one;
+        }
+    }
+    public float width => created ? created.width:200;
+    public float height => created ? created.height : 100;
+
 }

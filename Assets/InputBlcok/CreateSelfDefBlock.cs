@@ -41,37 +41,41 @@ public class CreateSelfDefBlock : MonoBehaviour
     [Header("to write")]
 
     public BlockFunction pre;
-    public BlockFunction Pre250width;
+
     public Transform RootTr;
     public void createOneBlock(string line)
     {
         var ll = line.Split(",");
-        bool iswidth = string.IsNullOrWhiteSpace(ll[4]) == false;
-        var ne = Instantiate(iswidth? Pre250width:pre, RootTr);
-        ne.compIO.pre.gameObject.SetActive(false);
+
+        bool FirstFullSize = string.IsNullOrWhiteSpace(ll[4]) == false;
+
+        string Icon = ll[5];
+
+        var to = pre;
+        var ne = Instantiate(to, RootTr);
         Created.Add(ne);
-        var neName = ne.GetComponent<CompName>();
-        neName.SetNameFresh(ll[0], ll[1]);
+
+        ne.SetIcon(Icon);
+        ne.FirstFullSize = FirstFullSize;
+        ne.SetNameFresh(ll[0], ll[1]);
 
 
+        List<OneParam> parms = new List<OneParam>();
         var ll2 = ll[2].Split('[', System.StringSplitOptions.RemoveEmptyEntries);
-        //print(ll2.Length);
-        ne.compIO.type.Clear();
         foreach (var item in ll2)
         {
             var neParam = new OneParam();
-            ne.compIO.type.Add(neParam);
+            parms.Add(neParam);
             neParam.Type = item;
         }
-
         var ll3 = ll[3].Split('[', System.StringSplitOptions.RemoveEmptyEntries);
-        for (int i = 0; i < ll3.Length && i < ne.compIO.type.Count; i++)
+        for (int i = 0; i < ll3.Length && i < parms.Count; i++)
         {
-            ne.compIO.type[i].Name = ll3[i];
+            parms[i].Name = ll3[i];
         }
 
+        ne.SetParams(parms);
 
-        ne.compIO.FreshParams();
     }
 
 }

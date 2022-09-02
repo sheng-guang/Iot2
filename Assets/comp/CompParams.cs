@@ -12,20 +12,20 @@ public class OneParam
 }
 
 
-
-
 public class CompParams : MonoBehaviour
 {
     public CompOneParam pre;
+    public BlockFunction funcBlock;
     private void Awake()
     {
+        funcBlock = GetComponent<BlockFunction>();
         pre.gameObject.SetActive(false);
     }
-    private void OnValidate()
-    {
-        if (Application.isPlaying) return;
-        FreshParams();
-    }
+    //private void OnValidate()
+    //{
+    //    if (Application.isPlaying) return;
+    //    LoadParams();
+    //}
     public List<OneParam> type;
     public List<CompOneParam> created;
     IEnumerator destory(GameObject g)
@@ -33,7 +33,7 @@ public class CompParams : MonoBehaviour
         yield return 1;
         DestroyImmediate(g);
     }
-    public void FreshParams()
+    public void LoadParams()
     {
         for (int i = 0; i < pre.transform.parent.childCount; i++)
         {
@@ -49,20 +49,11 @@ public class CompParams : MonoBehaviour
             created.Add(ne);
             ne.gameObject.SetActive(true);
             ne.SetType(to);
-            ne.transform.localPosition = getLoCalPositon(i);
-            ne.transform.localScale = getScale(i);
         }
     }
-    public virtual Vector3 getScale(int index)
-    {
-        return Vector3.one;
-    }
-    public virtual Vector3 getLoCalPositon(int index)
-    {
-        if (index == 0) return Vector3.zero;
-        var line = (index + 1) / 2;
-        var lineIndex = (index + 1) % 2;
-        return new Vector3(lineIndex * 100, -line * 50);
-    }
+
+
+
+
     
 }

@@ -47,7 +47,8 @@ public class InputBlcokHub : MonoBehaviour
         {
             for (int i = 0; i < list.Count; i++)
             {
-                bool active = list[i].ResName.Contains(key);
+                bool active = list[i].ResName.ToLower().Contains(key);
+                
                 list[i].gameObject.SetActive(active);
                 if (active) showing.Add(list[i]);
 
