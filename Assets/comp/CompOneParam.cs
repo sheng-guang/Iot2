@@ -17,7 +17,7 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
         rt = GetComponent<RectTransform>();
     }
     public TextMeshProUGUI TypeText;
-    public Vector3 InputFocusePoint => transform.position+Vector3.right* 100*transform.lossyScale.x;
+    public Vector3 InputFocusePoint => transform.position+Vector3.right* 200*transform.lossyScale.x;
     public void SetType(OneParam p)
     {
         ParamName = p.Name;

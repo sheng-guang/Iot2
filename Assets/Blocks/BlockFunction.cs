@@ -80,7 +80,8 @@ public class BlockFunction : Block
             else { ToNexLine(); }
         }
         float finalX = ToX + maxWidth;
-        if (IsFirst) finalX += 100f;
+        if (IsFirst) finalX += 120f;
+        else finalX += 20f;
         width = finalX;
     }
 
