@@ -4,22 +4,20 @@ using UnityEngine;
 using System;
 using static UnityEditor.Progress;
 
-[Serializable]
-public class OneParam
-{
-    public string Name;
-    public string Type;
-}
 
 
 public class CompParams : MonoBehaviour
 {
-    public CompOneParam pre;
+    public Transform preGroup;
+    public CompOneParam preText;
+    public CompOneParam PreTextDef;
+    public CompOneParam PreSelect;
+
     public BlockFunction funcBlock;
-    private void Awake()
+    public void Awake()
     {
         funcBlock = GetComponent<BlockFunction>();
-        pre.gameObject.SetActive(false);
+        preGroup.gameObject.SetActive(false);
     }
     //private void OnValidate()
     //{
@@ -35,17 +33,21 @@ public class CompParams : MonoBehaviour
     }
     public void LoadParams()
     {
-        for (int i = 0; i < pre.transform.parent.childCount; i++)
+        for (int i = 0; i < preGroup.parent.childCount; i++)
         {
-            var to = pre.transform.parent.GetChild(i);
-            if (to == pre.transform) continue;
+            var to = preGroup.parent.GetChild(i);
+            if (to == preGroup) continue;
             StartCoroutine(destory(to.gameObject));
         }
         created.Clear();
         for (int i = 0; i < type.Count; i++)
         {
             var to = type[i];
-            var ne = Instantiate(pre, pre.transform.parent);
+            CompOneParam toPre = null;
+            if (to.UItype == ParamUI.select) toPre = PreSelect;
+            if (to.UItype == ParamUI.testDef) toPre = PreTextDef;
+            if (to.UItype == ParamUI.text) toPre = preText;
+            var ne = Instantiate(toPre, preGroup.parent);
             created.Add(ne);
             ne.gameObject.SetActive(true);
             ne.SetType(to);

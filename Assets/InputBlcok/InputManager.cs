@@ -41,7 +41,11 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
         blockList.SetKey(NowStr);
         if ( Input.GetKeyDown(KeyCode.Return))
         {
-            if (SingleKey) { OnFocuse.enter(KeyCode.Return); }
+            if (SingleKey)
+            {
+                print("input  enter");
+                OnFocuse.enter(KeyCode.Return);
+            }
             else
             {
                 if(blockList.hasShowing)

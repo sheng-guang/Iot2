@@ -30,6 +30,7 @@ public class ForCreateSelfDefBlock : Editor<CreateSelfDefBlock>
     public override void OnInspectorGUI()
     {
         if (GUILayout.Button("Load")) tar.load();
+        //if (GUILayout.Button("freh whil in hub")) tar.FreshWhileInHub();
 
         base.OnInspectorGUI();
     }

@@ -25,7 +25,8 @@ public class BlockFunction : Block
     public void SetParams(List<OneParam> parms)
     {
         compIO.type = parms;
-        compIO.pre.gameObject.SetActive(false);
+
+        compIO.Awake();
         compIO.LoadParams();
     }
     public void SetNameFresh(string s,string returnT)

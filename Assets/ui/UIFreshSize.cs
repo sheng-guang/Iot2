@@ -23,7 +23,7 @@ public class UIFreshSize : MonoBehaviour
     {
         if (rt.width() <(pre?PreMinWidth: minWidth)) rt.setWidth(pre ? PreMinWidth : minWidth);
         int NowBlockIndex = 0;
-
+        //int RealNowBlockIndex = 0;
         float NowX = 0;
         float NowY = 0;
         float NowLineMaxHeight = 0;
@@ -31,8 +31,10 @@ public class UIFreshSize : MonoBehaviour
         void ToNewLine()
         {
             NowBlockIndex = 0;
+            //RealNowBlockIndex = 0;
             NowX = 0;
-            NowY += NowLineMaxHeight + LineSplit;
+           NowY += NowLineMaxHeight ;
+            if (NowlineIndex != 0) NowY += LineSplit;
             NowLineMaxHeight = 0;
             NowlineIndex++;
         }
@@ -56,9 +58,10 @@ public class UIFreshSize : MonoBehaviour
             //print(b.isNewLineStart);
             //print(NowlineIndex);
             //print(NowBlockIndex);
-            if (b.isNewLineStart && (NowBlockIndex != 0))
+            if (b.isNewLineStart )
             {
-                ToNewLine();
+                //if(NowlineIndex!=0)
+                    ToNewLine();
                 //print("new line start");
             }
             if (NowBlockIndex != 0 && TestIfOverWeight(b)) ToNewLine();
@@ -67,7 +70,8 @@ public class UIFreshSize : MonoBehaviour
             if (b.height > NowLineMaxHeight) NowLineMaxHeight = b.height;
             //print(b.height);
             NowX += b.widthWihtTail;
-            NowBlockIndex++;
+            if(b.BeLineCount)NowBlockIndex++;
+            //RealNowBlockIndex++;
         }
         rt.setHeight( NowY + NowLineMaxHeight);
         if (rt.height() < (pre ? PreMinHeight : minHeight))

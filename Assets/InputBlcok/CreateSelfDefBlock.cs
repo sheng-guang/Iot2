@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,17 @@ public class CreateSelfDefBlock : MonoBehaviour
 
     public List<Block> Created = new List<Block>();
     public UIFreshSize layout;
+    public void FreshWhileInHub()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var to = transform.GetChild(i).GetComponent<Block>();
+            if (to == null) continue;
+            to.FreshWhileInHub();
+
+        }
+
+    }
     [ContextMenu("load")]
     public void load()
     {
@@ -20,6 +32,7 @@ public class CreateSelfDefBlock : MonoBehaviour
             createOneBlock(item);
         }
         if (layout == null) layout = GetComponent<UIFreshSize>();
+        FreshWhileInHub();
         layout.FreshSize(true,true);
     }
     public void clearBreated()
@@ -73,9 +86,30 @@ public class CreateSelfDefBlock : MonoBehaviour
         {
             parms[i].Name = ll3[i];
         }
-
+        var ll6 = string.IsNullOrWhiteSpace(ll[6])?new string[] { } : ll[6].Split('[');
+        for (int i = 0; i < ll6.Length && i < parms.Count; i++)
+        {
+            if (string.IsNullOrWhiteSpace(ll6[i])) continue;
+            if (int.TryParse(ll6[i], out var ii) == false) continue;
+            parms[i].UItype = (ParamUI)ii;
+        }
         ne.SetParams(parms);
 
     }
 
+}
+
+
+public enum ParamUI
+{
+    text = 1,
+    testDef = 2,
+    select = 3
+}
+[Serializable]
+public class OneParam
+{
+    public string Name;
+    public string Type;
+    public ParamUI UItype = ParamUI.text;
 }

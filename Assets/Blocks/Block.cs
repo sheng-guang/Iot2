@@ -3,6 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+using System.IO;
+using System.Text;
+public class CodeFile
+{
+    public StringBuilder DefineBuilder = new StringBuilder();
+
+    public StringBuilder StackBuilder = new StringBuilder();
+    public string getCode()
+    {
+        var re= StackBuilder.ToString();
+        return re;
+    }
+}
+partial class Block
+{
+    public virtual void GenCode(CodeFile file)
+    {
+
+    }
+}
 partial class Block
 {
     public virtual int ParamCount => 0;
@@ -26,7 +46,7 @@ partial class Block
 [RequireComponent(typeof(CompName))]
 partial class Block//size
 {
-
+    public virtual bool BeLineCount => true;
     RectTransform _rt;
     public RectTransform rt { get { if (_rt == null) _rt = GetComponent<RectTransform>(); return _rt; } }
 
@@ -86,6 +106,7 @@ public partial class Block : MonoBehaviour
     public virtual Record GetRecord() { return null; }
     public virtual void SetRecord(Record r) { }
 
+    public virtual void FreshWhileInHub() { }
 
     public virtual Vector3 InputFocusePoint => transform.position +Vector3.right*widthWihtTail*transform.lossyScale.x;
     [SerializeField]
