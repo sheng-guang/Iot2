@@ -18,6 +18,18 @@ public class CodeFile
 }
 partial class Block
 {
+
+    public virtual BlockRecordNode GetRecord()
+    {
+        var re= new BlockRecordNode();
+        re.value = this;
+        re.ResName = ResName;
+        return re;
+    }
+    public virtual void ApplyRecord(BlockRecordNode record)
+    {
+
+    }
     public virtual void GenCode(CodeFile file)
     {
 
@@ -76,7 +88,7 @@ partial class Block : IPointerClickHandler
 
 partial class Block:InputEnter //enter
 {
-    public virtual Transform ChildRoot => null;
+    public virtual Transform ChildTr => null;
     public int Index => transform.GetSiblingIndex();
 
     public virtual void enter(KeyCode key)
@@ -100,11 +112,31 @@ partial class Block:InputEnter //enter
     }
 
 }
+[Serializable]
+public class BlockRecordNode
+{
+    [NonSerialized]
+    public Block value = null;
+    //name
+    public string ResName = null;
+    //children nodes
+    public List<BlockRecordNode> children = null;
+    //function
+    public string ParamText = null;
+    public string DropDownStr = null;
+    public BlockRecordNode ParamNode = null;
+    //width
+    public float? width = null;
+    //if
+    public int? IfCount = null;
+    public bool? HasElse = null;
+    //state jump
+    public float? LocalX = null, LocalY = null;
+}
 
 public partial class Block : MonoBehaviour
 {
-    public virtual Record GetRecord() { return null; }
-    public virtual void SetRecord(Record r) { }
+
 
     public virtual void FreshWhileInHub() { }
 
@@ -133,10 +165,10 @@ public partial class Block : MonoBehaviour
     public bool TryGetChildBlock(int index,out Block re)
     {
         re = null;
-        if (ChildRoot == null) return false;
+        if (ChildTr == null) return false;
         if (index < 0) return false;
-        if (ChildRoot.childCount > index == false) return false;
-        re= ChildRoot.GetChild(index).GetComponent<Block>();
+        if (ChildTr.childCount > index == false) return false;
+        re= ChildTr.GetChild(index).GetComponent<Block>();
         return re;
     }
 

@@ -75,7 +75,7 @@ public class InputManager : MonoBehaviour,IDeselectHandler,ISelectHandler
     }
     public void FreshFocusPoss()
     {
-        if (OnFocuse!=null)
+        if (OnFocuse!=null&&OnFocuse.Equals(null)==false)
         {
             transform.position = OnFocuse.InputFocusePoint;
         }

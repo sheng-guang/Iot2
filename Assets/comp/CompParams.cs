@@ -25,7 +25,7 @@ public class CompParams : MonoBehaviour
     //    LoadParams();
     //}
     public List<OneParam> type;
-    public List<CompOneParam> created;
+    public List<CompOneParam> Created;
     IEnumerator destory(GameObject g)
     {
         yield return 1;
@@ -39,7 +39,7 @@ public class CompParams : MonoBehaviour
             if (to == preGroup) continue;
             StartCoroutine(destory(to.gameObject));
         }
-        created.Clear();
+        Created.Clear();
         for (int i = 0; i < type.Count; i++)
         {
             var to = type[i];
@@ -48,7 +48,7 @@ public class CompParams : MonoBehaviour
             if (to.UItype == ParamUI.testDef) toPre = PreTextDef;
             if (to.UItype == ParamUI.text) toPre = preText;
             var ne = Instantiate(toPre, preGroup.parent);
-            created.Add(ne);
+            Created.Add(ne);
             ne.gameObject.SetActive(true);
             ne.SetType(to);
         }

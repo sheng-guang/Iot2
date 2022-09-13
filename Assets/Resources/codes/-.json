@@ -1,77 +1,76 @@
 {
-  "NodeName": "[code Root]",
-  "children": [
-    {
-      "NodeName": "part"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "state",
-      "children": [
+    "ResName": "",
+    "children": [
         {
-          "NodeName": "NameLineStart"
-        }
-      ],
-      "width": 600.0
-    },
-    {
-      "NodeName": "state",
-      "children": [
+            "ResName": "BlockNewLine"
+        },
         {
-          "NodeName": "NameLineStart"
-        }
-      ],
-      "width": 600.0
-    },
-    {
-      "NodeName": "state",
-      "children": [
+            "ResName": "state",
+            "children": [
+                {
+                    "ResName": "BlockNewLine"
+                },
+                {
+                    "ResName": "if",
+                    "children": [
+                        {
+                            "ResName": "If",
+                            "children": [
+                                {
+                                    "ResName": "BlockNewLine"
+                                },
+                                {
+                                    "ResName": "WIFI connected",
+                                    "children": []
+                                }
+                            ],
+                            "width": 286.0
+                        },
+                        {
+                            "ResName": "Then",
+                            "children": [
+                                {
+                                    "ResName": "BlockNewLine"
+                                },
+                                {
+                                    "ResName": "next state",
+                                    "LocalX": 67.0,
+                                    "LocalY": -104.999878
+                                }
+                            ],
+                            "width": 321.0
+                        },
+                        {
+                            "ResName": "Else",
+                            "children": [
+                                {
+                                    "ResName": "BlockNewLine"
+                                }
+                            ],
+                            "width": 300.0
+                        }
+                    ],
+                    "width": 381.0,
+                    "IfCount": 1,
+                    "HasElse": true
+                }
+            ],
+            "width": 513.0
+        },
         {
-          "NodeName": "NameLineStart"
+            "ResName": "BlockNewLine"
+        },
+        {
+            "ResName": "BlockNewLine"
+        },
+        {
+            "ResName": "state",
+            "children": [
+                {
+                    "ResName": "BlockNewLine"
+                }
+            ],
+            "width": 466.0
         }
-      ],
-      "width": 600.0
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    },
-    {
-      "NodeName": "NameLineStart"
-    }
-  ]
+    ]
 }

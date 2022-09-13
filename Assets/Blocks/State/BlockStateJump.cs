@@ -15,6 +15,21 @@ public enum stateJumpKind
 }
 public class BlockStateJump : Block
 {
+    public override void ApplyRecord(BlockRecordNode record)
+    {
+        base.ApplyRecord(record);
+        if (point != null && record.LocalX.HasValue)
+        {
+            point.Center.transform.localPosition = new Vector3(record.LocalX.Value, record.LocalY.Value);
+        }
+    }
+    public override BlockRecordNode GetRecord()
+    {
+        var re = base.GetRecord();
+        re.LocalX = point.Center.localPosition.x;
+        re.LocalY = point.Center.localPosition.y;
+        return re;
+    }
     public UIpointLine pointpre => UIpointLine.ins;
     public UIpointLine point;
     public BlockState master;
@@ -26,7 +41,7 @@ public class BlockStateJump : Block
     public virtual  void Awake()
     {
         master = GetComponentInParent<BlockState>();
-        if (master != null) point = Instantiate(pointpre, pointpre.transform.parent);
+        if (master != null) point = Instantiate(pointpre, transform);
     }
     private void Update()
     {

@@ -6,13 +6,13 @@ DHT read Temperature,float,,,,DHT,
 save float,,float[string,value[name,1,save,
 save int,,int[string,value[name,1,save,
 save bool,,bool[string,value[name,1,save,
-WIFI init,,DEFINE[string[string,Mod[ssi[password,,WIFI,3
+WIFI init,,DEFINE[string[string,Mod[ssid[password,,WIFI,3
 WIFI connected,bool,,,,WIFI,
 send data,,float[float,Humidity[Temperature,,WIFI,3[3
 digitalRead,int,int[DEFINE,,,,
 delay,,int,,,,
-init float,float,string[float,name[value,,,2
-init int,int,string[int,name[value,,,2
-init bool,bool,string[bool,name[value,,,2
+init float,float,string[float,name[value,,save,2
+init int,int,string[int,name[value,,save,2
+init bool,bool,string[bool,name[value,,save,2
 test float1,float,float,v[v[v[v,,,3
-test float,float,float[float[float[float[float[float[float[float[,v[v[v[v,,,
+test float2,float,float[float[float[float[float[float[float[float[,v[v[v[v,,,

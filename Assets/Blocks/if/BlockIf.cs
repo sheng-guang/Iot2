@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class BlockIf : BlockRootWidth
 {
+    public override BlockRecordNode GetRecord()
+    {
+        var re= base.GetRecord();
+        re.IfCount = RuleCount;
+        re.HasElse = HasElse;
+        return re;
+    }
+    public override void ApplyRecord(BlockRecordNode record)
+    {
+        if (record.IfCount.HasValue) RuleCount = record.IfCount.Value;
+        if (record.HasElse.HasValue) HasElse = record.HasElse.Value;
+        base.ApplyRecord(record);
+
+    }
     public override Block EntarChild(int index, string toName)
     {
         return null;
@@ -30,9 +44,9 @@ public class BlockIf : BlockRootWidth
         }
         if (HasElse) EnsureChild(RuleCount*2, BlockIfElse.StaticResName);
 
-        for (int i = RuleCount*2+(HasElse?1:0); i < ChildRoot.childCount; i++)
+        for (int i = RuleCount*2+(HasElse?1:0); i < ChildTr.childCount; i++)
         {
-           var to= ChildRoot.GetChild(i);
+           var to= ChildTr.GetChild(i);
             DestroyImmediate(to.gameObject);
         }
         FoChildEnsure();

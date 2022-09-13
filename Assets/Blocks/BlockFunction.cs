@@ -8,7 +8,35 @@ public interface BlockUp
     public Block EntarChild(int index, string resName);
     public void DeletChild(Block b);
 }
-public class BlockFunction : Block
+public partial class BlockFunction
+{
+    public override BlockRecordNode GetRecord()
+    {
+        var re = base.GetRecord();
+        re.children = new List<BlockRecordNode>();
+        for (int i = 0; i < compIO.Created.Count; i++)
+        {
+            var to = compIO.Created[i];
+            re.children.Add(to.GetRecord());
+
+        }
+        return re;
+    }
+    public override void ApplyRecord(BlockRecordNode record)
+    {
+        base.ApplyRecord(record);
+        var childCount = record.children.Count;
+        var ioCount = compIO.Created.Count;
+        if (childCount != ioCount) Debug.LogError("functionError");
+        var realCount = Mathf.Min(childCount, ioCount);
+        for (int i = 0; i < realCount; i++)
+        {
+            compIO.Created[i].ApplyRecord(record.children[i]);
+        }
+
+    }
+}
+public partial class BlockFunction : Block
 {
     public CompParams compIO;
     public override int ParamCount => compIO.type.Count;
@@ -37,9 +65,9 @@ public class BlockFunction : Block
     public override void FreshSize(bool getComp, bool minTimes)
     {
         base.FreshSize(getComp, minTimes);
-        for (int i = 0; i < compIO.created.Count; i++)
+        for (int i = 0; i < compIO.Created.Count; i++)
         {
-            var to = compIO.created[i];
+            var to = compIO.Created[i];
             to.freshSize(getComp, minTimes);
         }
         float ToX = 0;
@@ -54,9 +82,9 @@ public class BlockFunction : Block
             IsFirst = true;
         }
         if (HasIcon) ToX += 100;
-        for (int Toindex=0; Toindex < compIO.created.Count; Toindex++)
+        for (int Toindex=0; Toindex < compIO.Created.Count; Toindex++)
         {
-            var to = compIO.created[Toindex];
+            var to = compIO.Created[Toindex];
             if (Toindex == 0 && FirstFullSize)
             {
                 to.transform.localPosition = new Vector3(ToX, -ToY);
@@ -65,7 +93,7 @@ public class BlockFunction : Block
                 ToNexLine();
                 continue;
             }
-            if (Toindex == compIO.created.Count - 1&&IsFirst)
+            if (Toindex == compIO.Created.Count - 1&&IsFirst)
             {
                 ToY += 50f;
 

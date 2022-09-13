@@ -5,6 +5,9 @@ using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using Unity.VisualScripting;
+using Microsoft.Cci;
+
 public interface ITypeDef
 {
     string DefName { get; }
@@ -54,7 +57,36 @@ public static class ParamDef
         }
     }
 }
-public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,BlockUp
+partial class CompOneParam
+{
+    public BlockRecordNode GetRecord()
+    {
+        var re = new BlockRecordNode();
+        if (Created != null) re.ParamNode = Created.GetRecord();
+        if (ParamText&& string.IsNullOrEmpty(ParamText.text) == false)
+        {
+            re.ParamText = ParamText.text;
+        }
+        if (dropDown)
+        {
+            re.DropDownStr = dropDown.captionText.text;
+        }
+        return re;
+    }
+    public void ApplyRecord(BlockRecordNode c)
+    {
+        if (c.ParamNode != null)
+        {
+            //print(c.ParamNode.NodeName);
+
+            var to = EnterSelfBlock(c.ParamNode.ResName);
+            if (to) to.ApplyRecord(c.ParamNode);
+        }
+        if(ParamText)        ParamText.text = c.ParamText;
+        if (dropDown) dropDown.captionText.text = c.DropDownStr;
+    }
+}
+public partial class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,BlockUp
 {
 
 
@@ -66,6 +98,8 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
         rt = GetComponent<RectTransform>();
     }
     public TextMeshProUGUI TypeText;
+    public TMP_InputField ParamText;
+    public TMP_Dropdown dropDown;
     public Vector3 InputFocusePoint => transform.position+Vector3.right* 200*transform.lossyScale.x;
     public virtual void SetType(OneParam p)
     {
@@ -78,25 +112,31 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
     public Transform CreatedPar => transform.GetChild(0);
     public virtual void enter(string toName)
     {
-        var pre = Creater.getPre(toName);
-        if (pre == null) return ;
-        if (pre.returnType != Type) return;
+        EnterSelfBlock(toName);
+    }
+    public Block EnterSelfBlock(string resName)
+    {
+
+        var pre = Creater.getPre(resName);
+        if (pre == null) return null;
+        if (pre.returnType != Type) return null;
+        DeletChild(null);
         var ne = Instantiate(pre, CreatedPar);
-        created = ne;
+        Created = ne;
         ne.AfterEnter();
         ne.SetUp(this);
         //ne.transform.SetSiblingIndex(index);
         ne.transform.localPosition = Vector3.zero;
         ne.transform.localScale = Vector3.one;
-        InputManager.Focus(created);
+        InputManager.Focus(Created);
+        return Created;
     }
-
     public virtual void enter(KeyCode s)
     {
-        if(s== KeyCode.Backspace) {if(created) DestroyImmediate(created); }
+        if(s== KeyCode.Backspace) {if(Created) DestroyImmediate(Created); }
     }
    
-    public Block created = null;
+    public Block Created = null;
     public void OnPointerClick(PointerEventData eventData)
     {
         InputManager.Focus(this);
@@ -115,20 +155,20 @@ public class CompOneParam : MonoBehaviour, IPointerClickHandler, InputEnter,Bloc
     public void DeletChild(Block b)
     {
         //print("here");
-        if (created) Destroy(created.gameObject);
+        if (Created) Destroy(Created.gameObject);
         InputManager.Focus(this);
     }
 
     public void freshSize(bool getComp, bool minTimes)
     {
-        if (created)
+        if (Created)
         {
-            created.FreshSize(getComp, minTimes);
-            created.transform.localPosition = Vector3.zero;
-            created.transform.localScale = Vector3.one;
+            Created.FreshSize(getComp, minTimes);
+            Created.transform.localPosition = Vector3.zero;
+            Created.transform.localScale = Vector3.one;
         }
     }
-    public float width => created ? created.width:200;
-    public float height => created ? created.height : 100;
+    public float width => Created ? Created.width:200;
+    public float height => Created ? Created.height : 100;
 
 }

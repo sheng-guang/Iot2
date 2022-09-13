@@ -22,7 +22,7 @@ public class UIpointLine : MonoBehaviour
     {
         start += Vector3.back;
         end += Vector3.back;
-        transform.position = end;
+        transform.position = start;
         {
             mesh.SetPoint(start, 0);
             var to = (start - end).normalized* HandelLen + center;
